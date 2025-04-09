@@ -1,4 +1,4 @@
-import { isArray, isObject } from "../../utils";
+import { isArray, isObject } from "../../utils/utils";
 
 export function deepEquals<T>(objA: T, objB: T): boolean {
   // 두 값이 정확히 같은 경우 true 반환

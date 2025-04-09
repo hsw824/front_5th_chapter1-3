@@ -1,4 +1,4 @@
-import { isArray, isObject } from "../../utils";
+import { isArray, isObject } from "../../utils/utils";
 
 export function shallowEquals<T>(objA: T, objB: T): boolean {
   // 원시값일 경우
