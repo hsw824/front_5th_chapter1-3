@@ -41,7 +41,7 @@ interface NotificationContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 const UserContext = createContext<UserContextType | undefined>(undefined);
 const NotificationContext = createContext<NotificationContextType | undefined>(
-  undefined
+  undefined,
 );
 
 // 커스텀 훅: useAppContext
@@ -128,18 +128,18 @@ export const ItemList: React.FC<{
     return items.filter(
       (item) =>
         item.name.toLowerCase().includes(filter.toLowerCase()) ||
-        item.category.toLowerCase().includes(filter.toLowerCase())
+        item.category.toLowerCase().includes(filter.toLowerCase()),
     );
   }, [items, filter]);
 
   const totalPrice = useMemo(
     () => filteredItems.reduce((sum, item) => sum + item.price, 0),
-    [filteredItems]
+    [filteredItems],
   );
 
   const averagePrice = useMemo(
     () => Math.round(totalPrice / filteredItems.length) || 0,
-    [totalPrice, filteredItems]
+    [totalPrice, filteredItems],
   );
   return (
     <div className="mt-8">
@@ -338,12 +338,12 @@ const App: React.FC = React.memo(() => {
       };
       setNotifications((prev) => [...prev, newNotification]);
     },
-    []
+    [],
   );
 
   const removeNotification = useCallback((id: number) => {
     setNotifications((prev) =>
-      prev.filter((notification) => notification.id !== id)
+      prev.filter((notification) => notification.id !== id),
     );
   }, []);
 
@@ -352,7 +352,7 @@ const App: React.FC = React.memo(() => {
       theme,
       toggleTheme,
     }),
-    [theme, toggleTheme]
+    [theme, toggleTheme],
   );
 
   const userContextValue: UserContextType = useMemo(
@@ -361,7 +361,7 @@ const App: React.FC = React.memo(() => {
       login,
       logout,
     }),
-    [user, login, logout]
+    [user, login, logout],
   );
 
   const notificationContextValue: NotificationContextType = useMemo(
@@ -370,7 +370,7 @@ const App: React.FC = React.memo(() => {
       addNotification,
       removeNotification,
     }),
-    [notifications, addNotification, removeNotification]
+    [notifications, addNotification, removeNotification],
   );
 
   return (
