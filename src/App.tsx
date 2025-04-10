@@ -1,17 +1,17 @@
+import AppContainer from "./AppContainer";
+
 import React, { useState } from "react";
 import { generateItems } from "./utils/utils";
-import { memo, useCallback, useMemo } from "./@lib";
+import { memo, useCallback } from "./@lib";
 import { ThemeProvider } from "./store/theme/ThemeProvider";
 import { UserProvider } from "./store/user/UserProvider";
 import { NotificationProvider } from "./store/notification/NotificationProvider";
 
-import AppContainer from "./AppContainer";
-
 // TODO: 아예 theme관련 로직도 모두 다 theme.ts에다가 다 넣어버리고 나머지도
+const initialItems = () => generateItems(1000);
 
 // 메인 App 컴포넌트
 const App: React.FC = memo(() => {
-  const initialItems = useMemo(() => generateItems(1000), []);
   const [items, setItems] = useState(initialItems);
 
   const addItems = useCallback(() => {
@@ -23,11 +23,11 @@ const App: React.FC = memo(() => {
 
   return (
     <ThemeProvider>
-      <UserProvider>
-        <NotificationProvider>
+      <NotificationProvider>
+        <UserProvider>
           <AppContainer items={items} addItems={addItems} />
-        </NotificationProvider>
-      </UserProvider>
+        </UserProvider>
+      </NotificationProvider>
     </ThemeProvider>
   );
 });

@@ -1,13 +1,6 @@
 import { useState } from "react";
-import {
-  useCallback,
-  // useMemo
-} from "../../@lib";
-import {
-  User,
-  // UserContextType,
-  UserContext,
-} from "./UserContext";
+import { useCallback, useMemo } from "../../@lib";
+import { User, UserContextType, UserContext } from "./UserContext";
 import { useNotificationContext } from "../notification/NotificationContext";
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
@@ -24,24 +17,14 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     addNotification("로그아웃되었습니다", "info");
   }, []);
 
-  // const value: UserContextType = useMemo(
-  //   () => ({
-  //     user,
-  //     login,
-  //     logout,
-  //   }),
-  //   [user, login, logout],
-  // );
-
-  return (
-    <UserContext.Provider
-      value={{
-        user,
-        login,
-        logout,
-      }}
-    >
-      {children}
-    </UserContext.Provider>
+  const value: UserContextType = useMemo(
+    () => ({
+      user,
+      login,
+      logout,
+    }),
+    [user, login, logout]
   );
+
+  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };

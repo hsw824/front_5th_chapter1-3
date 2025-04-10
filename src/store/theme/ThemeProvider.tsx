@@ -1,14 +1,11 @@
 import { useState } from "react";
-import {
-  useCallback,
-  // useMemo
-} from "../../@lib";
+import { useCallback, useMemo } from "../../@lib";
 import { ThemeContext } from "./ThemeContext";
 
-// interface ThemeContextType {
-//   theme: string;
-//   toggleTheme: () => void;
-// }
+interface ThemeContextType {
+  theme: string;
+  toggleTheme: () => void;
+}
 
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const [theme, setTheme] = useState("light");
@@ -17,22 +14,15 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
   }, []);
 
-  // const value: ThemeContextType = useMemo(
-  //   () => ({
-  //     theme,
-  //     toggleTheme,
-  //   }),
-  //   [theme, toggleTheme],
-  // );
+  const value: ThemeContextType = useMemo(
+    () => ({
+      theme,
+      toggleTheme,
+    }),
+    [theme, toggleTheme]
+  );
 
   return (
-    <ThemeContext.Provider
-      value={{
-        theme,
-        toggleTheme,
-      }}
-    >
-      {children}
-    </ThemeContext.Provider>
+    <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
   );
 };
