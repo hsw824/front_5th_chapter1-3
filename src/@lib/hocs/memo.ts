@@ -1,5 +1,5 @@
 import { shallowEquals } from "../equalities";
-import { ComponentType, createElement } from "react";
+import React, { ComponentType, createElement } from "react";
 import { useRef } from "../hooks";
 
 export function memo<P extends object>(
@@ -8,23 +8,13 @@ export function memo<P extends object>(
 ) {
   return function WrapperComponent(props: P) {
     const prevProps = useRef<P | null>(null);
-    const isInitialized = useRef(true);
+    const element = useRef<React.ReactNode | null>(null);
 
-    if (isInitialized.current) {
+    if (prevProps.current === null || !_equals(prevProps.current, props)) {
       prevProps.current = props;
-      isInitialized.current = false;
-      const element = createElement(Component, props);
-      return element;
+      element.current = createElement(Component, props);
     }
 
-    if (!_equals(prevProps.current, props)) {
-      prevProps.current = props;
-      isInitialized.current = false;
-      const element = createElement(Component, props);
-
-      return element;
-    }
-
-    return null;
+    return element.current;
   };
 }
