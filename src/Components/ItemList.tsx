@@ -1,10 +1,7 @@
-import React from "React";
-
-import { useState } from "react";
-import { useMemo } from "../@lib";
+import React, { useState } from "react";
+import { memo, useMemo } from "../@lib";
 import { renderLog } from "../utils/utils";
-import { ThemeContextType } from "../types/types";
-import { useThemeContext } from "../\bcontext/theme";
+import { useThemeContext } from "../store/theme/ThemeContext";
 
 interface Item {
   id: number;
@@ -16,10 +13,10 @@ interface Item {
 const ItemList: React.FC<{
   items: Item[];
   onAddItemsClick: () => void;
-}> = React.memo(({ items, onAddItemsClick }) => {
+}> = memo(({ items, onAddItemsClick }) => {
   renderLog("ItemList rendered");
   const [filter, setFilter] = useState("");
-  const { theme } = useThemeContext() as ThemeContextType;
+  const { theme } = useThemeContext();
 
   const filteredItems = useMemo(() => {
     return items.filter(
